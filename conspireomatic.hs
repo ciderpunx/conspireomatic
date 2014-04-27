@@ -34,6 +34,18 @@ feedAuthor = do
 									 , personOther = []
 									 })
 
+entryLink :: IO Link
+entryLink = do
+    return (Link { linkHref = "http://charlieharvey.org.uk/page/conspireomatic"
+                 , linkRel  = Nothing
+                 , linkType = Nothing
+                 , linkHrefLang = Nothing
+                 , linkTitle = Nothing
+                 , linkLength = Nothing
+                 , linkAttrs = []
+                 , linkOther = []
+                 })
+
 -- Make feed with a single conspiracy in it
 makeFeed :: IO Feed
 makeFeed = do
@@ -63,6 +75,7 @@ conspiracyEntry = do
       p <- feedAuthor
       d <- feedDate
       c <- conspiracy
+      l <- entryLink
       return (Entry   { entryId = c
 										  , entryTitle = TextString c
 										  , entryUpdated = d
@@ -70,7 +83,7 @@ conspiracyEntry = do
 										  , entryCategories = []
 										  , entryContent = Just $ TextContent c
 										  , entryContributor = []
-										  , entryLinks = []
+										  , entryLinks = [l]
 										  , entryPublished = Just d
 										  , entryRights = Nothing
 										  , entrySource = Nothing
